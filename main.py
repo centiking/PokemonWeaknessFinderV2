@@ -1,4 +1,3 @@
-
 from customtkinter import CTkLabel
 from PokemonClass import Pokemon as Pk
 import tkinter as tk
@@ -17,8 +16,8 @@ root = ctk.CTk()
 root.title("Pokemon Weakness Finder")
 root.iconbitmap("ball.ico")
 
-Image_Frame = ctk.CTkFrame(root)
-Image_Frame.grid(padx=5, pady=5)
+Image_Frame = ctk.CTkFrame(root, bg_color="#1A1A1A", fg_color="#1A1A1A")
+Image_Frame.grid()
 
 Top_Frame = ctk.CTkFrame(root)
 Top_Frame.grid(padx=5, pady=5)
@@ -149,7 +148,7 @@ def SearchPokemon():
         for widget in Image_Frame.winfo_children():
             widget.destroy()
         your_image = ctk.CTkImage(light_image=Image.open(os.path.join(Pokemon.Image)), size=(150, 150))
-        ctk.CTkLabel(master=Image_Frame, image=your_image, text='', corner_radius=50).grid(column=0, row=0, padx=5, pady=5)
+        ctk.CTkLabel(master=Image_Frame, image=your_image, text='', corner_radius=50).grid(column=0, row=0)
 
 
 PokemonName.bind("<Key>", lambda x: root.after(1, FilterPokemon))
