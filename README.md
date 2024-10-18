@@ -1,7 +1,9 @@
 Displays Weakness For A typed in Pokemon Does not yet include Mega or diffrent regions of pokemon
-# To run code
+# To run code Copy and Paste command into the cmd
 
 ```
-pip install -r requirements.txt
-python main.py
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r .\requirements.txt
+pyinstaller --onefile .\main.pyw
 ```
