@@ -118,7 +118,7 @@ def SearchPokemon():
         # Place remaining keys in the second row
         create_label_in_frame(Bottom_Grid, 2, w, remaining_keys[w],Color2,Pokemon)
 
-    Info.configure(text=f"Hp:{Pokemon.Hp} | Attack:{Pokemon.Att} | Defense:{Pokemon.Def} | Sp.Atk:{Pokemon.SAtt} | Sp.Def:{Pokemon.SDef} | Speed:{Pokemon.Spd}")
+    Info.configure(text=f"Ability:{Pokemon.Ability}|Hp:{Pokemon.Hp} | Attack:{Pokemon.Att} | Defense:{Pokemon.Def} | Sp.Atk:{Pokemon.SAtt} | Sp.Def:{Pokemon.SDef} | Speed:{Pokemon.Spd}")
     for widget in Lower_Frame.winfo_children():
         widget.destroy()
     for i,v in enumerate(Pokemon.Types):
@@ -127,7 +127,7 @@ def SearchPokemon():
             "Flying": "#89f",
             "Normal": "#aa9",
             "Water": "#39f",
-            "Eletric": "#fc3",
+            "Electric": "#fc3",
             "Grass": "#7c5",
             "Ice": "#6cf",
             "Fighting": "#b54",
