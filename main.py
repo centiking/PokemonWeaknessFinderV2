@@ -100,6 +100,8 @@ def SearchPokemon():
     # Track the number of keys used
     used_keys_count = 0
 
+    for widget in Bottom_Grid.winfo_children():
+        widget.destroy()
     # First, fill the top row
     for h in range(2):
         for w in range(9):
