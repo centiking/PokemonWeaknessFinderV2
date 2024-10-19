@@ -25,3 +25,4 @@ class Pokemon:
     def __str__(self):
         return self.Name
 
+print(Pokemon("Abra").Id)
