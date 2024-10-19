@@ -181,7 +181,7 @@ def SearchPokemon():
                 "Fairy": "#e9e",
             }
             frame = CTkFrame(Level_MoveBar)
-            frame.grid()
+            frame.grid(pady=5)
             CTkLabel(frame, text=f"{i}", text_color="black",fg_color=fg.get(Pokemon.Moves[i]),corner_radius=5).grid(column=0, row=v)
             CTkLabel(frame, text=f"{Pokemon.Moves[i]}", corner_radius=5).grid(column=1,row=v)
 
