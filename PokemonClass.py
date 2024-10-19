@@ -19,7 +19,9 @@ class Pokemon:
         for Images in glob("PokemonImages/*.png"):
             if f"{self.Name}.png" == Images.replace("PokemonImages\\", ""):
                 self.Image = Images
+        self.Moves = self.data[Pokemon]["Moves"]
 
 
     def __str__(self):
         return self.Name
+
