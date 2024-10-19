@@ -1,4 +1,4 @@
-from customtkinter import CTkLabel
+from customtkinter import CTkLabel, CTkFrame
 from PokemonClass import Pokemon as Pk
 import tkinter as tk
 from tkinter import Tk, StringVar
@@ -24,6 +24,8 @@ Top_Frame.grid(column=1,row=1,padx=5,pady=5)
 
 Level_MoveBar = ctk.CTkScrollableFrame(root, label_text="Pokemon Level Up Moves")
 Level_MoveBar.grid(column=0,pady=5,padx=5,row=0, rowspan=6,sticky="nsew")
+
+
 
 Middle_Frame = ctk.CTkFrame(root)
 Middle_Frame.grid(column=1,row=2,padx=5,pady=5)
@@ -69,6 +71,8 @@ def SearchPokemon():
             frame = ctk.CTkFrame(parent, width=50, height=50, corner_radius=5)
             frame.grid(row=row+1, column=column, padx=5, pady=5)
 
+            Pokemon.Weakness[text] = Pokemon.Weakness[text][len(Pokemon.Weakness[text])-1]
+            Pokemon.Weakness[text] = Pokemon.Weakness[text].replace("Ãƒâ€šÃ‚Â", "")
             Pokemon.Weakness[text] = Pokemon.Weakness[text].replace("Ã‚Â", "")
             if Pokemon.Weakness[text] == "1":
                 label = ctk.CTkLabel(frame, text=Pokemon.Weakness[text], width=50, height=50, font=("Arial", 25), text_color="black",fg_color="grey", corner_radius=5)
@@ -124,6 +128,7 @@ def SearchPokemon():
     Info.configure(text=f"Ability:{Pokemon.Ability}|Hp:{Pokemon.Hp} | Attack:{Pokemon.Att} | Defense:{Pokemon.Def} | Sp.Atk:{Pokemon.SAtt} | Sp.Def:{Pokemon.SDef} | Speed:{Pokemon.Spd}")
     for widget in Lower_Frame.winfo_children():
         widget.destroy()
+
     for i,v in enumerate(Pokemon.Types):
         fg = {
             "Fire": "#f42",
@@ -152,7 +157,33 @@ def SearchPokemon():
             widget.destroy()
         your_image = ctk.CTkImage(light_image=Image.open(os.path.join(Pokemon.Image)), size=(150, 150))
         ctk.CTkLabel(master=Image_Frame, image=your_image, text='', corner_radius=50).grid(column=0, row=0)
-        Level_MoveBar.configure(Values=Pokemon.Moves)
+        for widget in Level_MoveBar.winfo_children():
+            widget.destroy()
+        for v,i in enumerate(Pokemon.Moves.keys()):
+            fg = {
+                "Fire": "#f42",
+                "Flying": "#89f",
+                "Normal": "#aa9",
+                "Water": "#39f",
+                "Electric": "#fc3",
+                "Grass": "#7c5",
+                "Ice": "#6cf",
+                "Fighting": "#b54",
+                "Poison": "#a59",
+                "Ground": "#db5",
+                "Psychic": "#f59",
+                "Bug": "#ab2",
+                "Rock": "#ba6",
+                "Ghost": "#66b",
+                "Dragon": "#76e",
+                "Dark": "#754",
+                "Steel": "#aab",
+                "Fairy": "#e9e",
+            }
+            frame = CTkFrame(Level_MoveBar)
+            frame.grid()
+            CTkLabel(frame, text=f"{i}", text_color="black",fg_color=fg.get(Pokemon.Moves[i]),corner_radius=5).grid(column=0, row=v)
+            CTkLabel(frame, text=f"{Pokemon.Moves[i]}", corner_radius=5).grid(column=1,row=v)
 
 
 PokemonName.bind("<Key>", lambda x: root.after(1, FilterPokemon))
