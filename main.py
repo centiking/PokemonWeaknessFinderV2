@@ -184,13 +184,13 @@ def SearchPokemon():
             frame = CTkFrame(Level_MoveBar)
             frame.grid(pady=5)
 
-            # Assuming CTkLabel supports wraplength similar to tkinter.Label
+
             CTkLabel(frame, text=f"{i}", text_color="black", fg_color=fg.get(Pokemon.Moves[i][0]),
                      corner_radius=5).grid(column=0, row=0)
             CTkLabel(frame, text=f"{Pokemon.Moves[i][0]}", corner_radius=5, wraplength=100).grid(column=1,
-                                                                                                 row=0)  # Adjust wraplength as needed
+                                                                                                 row=0)
             CTkLabel(Level_MoveBar, text=f"{Pokemon.Moves[i][1].strip()}", wraplength=200).grid(
-                columnspan=2)  # Adjust wraplength as needed
+                columnspan=2)
 
 
 
