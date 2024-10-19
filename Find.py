@@ -34,7 +34,7 @@ def findPokemon(pokemon):
     }
 
     # Introduce a random delay
-    time.sleep(random.uniform(1, 3))
+    # time.sleep(random.uniform(1, 3))
 
     response = requests.get(f"https://pokemondb.net/move/all", headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -42,7 +42,7 @@ def findPokemon(pokemon):
         A = soup.find_all("a", {"class": "ent-name"})
         for i in A:
             if Move == i.text:
-                Moves[Move] = i.parent.parent.find_all("a", {"class": "type-icon"})[0].text
+                Moves[Move] = [i.parent.parent.find_all("a", {"class": "type-icon"})[0].text,i.parent.parent.find_all("td", {"class": "cell-long-text"})[0].text]
 
     FullPokemon["Moves"] = Moves
     AllPokemon[pokemon] = FullPokemon
@@ -54,9 +54,8 @@ with ThreadPoolExecutor(max_workers=10) as executor:
     executor.map(findPokemon, data)
 
 
-
-
-
 with open("Data.json", "w", encoding='utf-8') as outfile:
     json.dump(AllPokemon, outfile, ensure_ascii=False, indent=4)
+
+
 

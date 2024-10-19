@@ -15,6 +15,7 @@ ctk.set_appearance_mode("dark")
 root = ctk.CTk()
 root.title("Pokemon Weakness Finder")
 root.iconbitmap("ball.ico")
+root.resizable(False, False)
 
 Image_Frame = ctk.CTkFrame(root, bg_color="#1A1A1A", fg_color="#1A1A1A")
 Image_Frame.grid(column=1,row=0,pady=5)
@@ -181,9 +182,16 @@ def SearchPokemon():
                 "Fairy": "#e9e",
             }
             frame = CTkFrame(Level_MoveBar)
-            frame.grid()
-            CTkLabel(frame, text=f"{i}", text_color="black",fg_color=fg.get(Pokemon.Moves[i]),corner_radius=5).grid(column=0, row=v)
-            CTkLabel(frame, text=f"{Pokemon.Moves[i]}", corner_radius=5).grid(column=1,row=v)
+            frame.grid(pady=5)
+
+            # Assuming CTkLabel supports wraplength similar to tkinter.Label
+            CTkLabel(frame, text=f"{i}", text_color="black", fg_color=fg.get(Pokemon.Moves[i][0]),
+                     corner_radius=5).grid(column=0, row=0)
+            CTkLabel(frame, text=f"{Pokemon.Moves[i][0]}", corner_radius=5, wraplength=100).grid(column=1,
+                                                                                                 row=0)  # Adjust wraplength as needed
+            CTkLabel(Level_MoveBar, text=f"{Pokemon.Moves[i][1].strip()}", wraplength=200).grid(
+                columnspan=2)  # Adjust wraplength as needed
+
 
 
 PokemonName.bind("<Key>", lambda x: root.after(1, FilterPokemon))
