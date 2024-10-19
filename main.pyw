@@ -97,7 +97,7 @@ def SearchPokemon():
     text = PokemonName.get().lower()
 
     for I in PokemonNames:
-        if text in I.lower():
+        if text.lower() == I.lower():
             Pokemon = Pk(I)
     # Assuming Pokemon.Weakness is a dictionary
     keys = list(Pokemon.Weakness.keys())
