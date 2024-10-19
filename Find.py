@@ -17,13 +17,14 @@ user_agents = [
 
 # Load data from JSON
 with open('Data.json') as json_data:
-    data = json.load(json_data)
+    datas = json.load(json_data)
 
 
 def findPokemon(pokemon):
-    global data
-    FullPokemon = {}
-    Weakness = {}
+    global datas
+    Nums = ["1","2","3","4","5","6","7","8","9"]
+    FullPokemon = datas[pokemon]
+    Moves = {}
     headers = {
         'User-Agent': random.choice(user_agents),
         'Accept-Language': 'en-US,en;q=0.9',
@@ -35,13 +36,27 @@ def findPokemon(pokemon):
     # Introduce a random delay
     time.sleep(random.uniform(1, 3))
 
-    response = requests.get(f"https://pokemondb.net/sprites", headers=headers)
+    response = requests.get(f"https://pokemondb.net/move/all", headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
-    table = soup.find("img", {"class": "img-fixed icon-pkmn", "alt":f"{pokemon}"}).get("src")
-    img_data = requests.get(table).content
-    with open(f'PokemonImages\\{pokemon}.png', 'wb') as handler:
-        handler.write(img_data)
+    for Move in FullPokemon["Moves"]:
+        A = soup.find_all("a", {"class": "ent-name"})
+        for i in A:
+            if Move == i.text:
+                Moves[Move] = i.parent.parent.find_all("a", {"class": "type-icon"})[0].text
 
-data = list(data.keys())
+    FullPokemon["Moves"] = Moves
+    AllPokemon[pokemon] = FullPokemon
+    print(f"{pokemon} finished")
+
+data = list(datas.keys())
+
 with ThreadPoolExecutor(max_workers=10) as executor:
     executor.map(findPokemon, data)
+
+
+
+
+
+with open("Data.json", "w", encoding='utf-8') as outfile:
+    json.dump(AllPokemon, outfile, ensure_ascii=False, indent=4)
+

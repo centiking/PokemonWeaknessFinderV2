@@ -17,24 +17,25 @@ root.title("Pokemon Weakness Finder")
 root.iconbitmap("ball.ico")
 
 Image_Frame = ctk.CTkFrame(root, bg_color="#1A1A1A", fg_color="#1A1A1A")
-Image_Frame.grid()
+Image_Frame.grid(column=1,row=0,pady=5)
 
 Top_Frame = ctk.CTkFrame(root)
-Top_Frame.grid(padx=5, pady=5)
+Top_Frame.grid(column=1,row=1,padx=5,pady=5)
 
+Level_MoveBar = ctk.CTkScrollableFrame(root, label_text="Pokemon Level Up Moves")
+Level_MoveBar.grid(column=0,pady=5,padx=5,row=0, rowspan=6,sticky="nsew")
 
 Middle_Frame = ctk.CTkFrame(root)
-Middle_Frame.grid(padx=5, pady=5)
+Middle_Frame.grid(column=1,row=2,padx=5,pady=5)
+
 Info = ctk.CTkLabel(Middle_Frame, text="", font=("Arial", 16))
-Info.grid(padx=5, pady=5)
+Info.grid(column=1,row=3,padx=5,pady=5)
 
 Lower_Frame = ctk.CTkFrame(root)
-Lower_Frame.grid(padx=5, pady=5)
-
-
+Lower_Frame.grid(column=1,row=4,padx=5,pady=5)
 
 Bottom_Grid = ctk.CTkFrame(root)
-Bottom_Grid.grid(padx=5, pady=5)
+Bottom_Grid.grid(column=1,row=5,padx=5,pady=5)
 
 ctk.CTkLabel(Top_Frame, text="Pokemon Weakness Finder", font=("Arial", 25)).grid(column=0, row=0, columnspan=2, padx=5, pady=5)
 PokemonName = ctk.CTkComboBox(Top_Frame, values=PokemonNames)
@@ -151,6 +152,7 @@ def SearchPokemon():
             widget.destroy()
         your_image = ctk.CTkImage(light_image=Image.open(os.path.join(Pokemon.Image)), size=(150, 150))
         ctk.CTkLabel(master=Image_Frame, image=your_image, text='', corner_radius=50).grid(column=0, row=0)
+        Level_MoveBar.configure(Values=Pokemon.Moves)
 
 
 PokemonName.bind("<Key>", lambda x: root.after(1, FilterPokemon))
