@@ -1,3 +1,5 @@
+from pydoc import plaintext
+
 from PokemonClass import Pokemon as Pk
 import customtkinter as ctk
 import json
@@ -20,11 +22,63 @@ Image_Frame.grid(column=1,row=0,pady=5)
 Top_Frame = ctk.CTkFrame(root)
 Top_Frame.grid(column=1,row=1,padx=5,pady=5)
 
+
+def FilterPokemonFirst():
+    text = AddPokemonName.get().lower()
+    if Filtered := [I for I in PokemonNames if text in I.lower()]:
+        AddPokemonName.configure(values=Filtered)
+    else:
+        AddPokemonName.configure(values=PokemonNames)
+
+def ChangePokemon(func):
+    def wrapper():
+        PokemonName = AddPokemonName.get()
+        func(PokemonName)
+    return wrapper
+
+@ChangePokemon
+def Add(Pokemon):
+    global PokemonNames
+    if Pokemon not in MyPokemonList and any(Pokemon == PName for PName in PokemonNames):
+        MyPokemonList.append(Pokemon)
+        PokemonListBox.configure(values=MyPokemonList)
+
+@ChangePokemon
+def Sub(Pokemon):
+    global PokemonNames
+    if Pokemon in MyPokemonList and any(Pokemon == PName for PName in PokemonNames):
+        MyPokemonList.remove(Pokemon)
+        PokemonListBox.configure(values=MyPokemonList)
+
+AddOrRemovePokemon = ctk.CTkFrame(root)
+AddOrRemovePokemon.grid(column=2, pady=5,padx=5,row=0, rowspan=6,sticky="new")
+
+
+
+AddPokemonName = ctk.CTkComboBox(AddOrRemovePokemon, values=PokemonNames)
+AddPokemonName.grid(row=0,columnspan=2, padx=5, pady=5)
+AddPokemonName.bind("<Key>", lambda x: root.after(1, FilterPokemonFirst))
+
+AddButton = ctk.CTkButton(AddOrRemovePokemon, text="Add Pokemon")
+AddButton.grid(column=0,row=1,padx=5)
+
+AddButton.bind("<Button-1>", lambda x: Add())
+
+
+SubButton = ctk.CTkButton(AddOrRemovePokemon, text="Remove Pokemon")
+SubButton.grid(column=1,row=1,padx=5, pady=5)
+
+SubButton.bind("<Button-1>", lambda x: Sub())
+
+
+
 MyPokemon = ctk.CTkScrollableFrame(root, label_text="My Pokemon")
 MyPokemon.grid(column=0,pady=5,padx=5,row=0, rowspan=6,sticky="nsew")
+MyPokemonList = []
 
-MyPokemonList = ["Kirlia","Stunky","Nincada","Fletchinder","Pachirisu","Azumarill"]
-
+PokemonListBox = ctk.CTkOptionMenu(AddOrRemovePokemon, values=MyPokemonList)
+PokemonListBox.grid(columnspan=2)
+PokemonListBox.set('My Pokmeon')
 
 Lower_Frame = ctk.CTkFrame(root)
 Lower_Frame.grid(column=1,row=4,padx=5,pady=5)
